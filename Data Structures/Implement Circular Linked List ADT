@@ -1,0 +1,280 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+void display(struct Node * ptr){
+    struct Node * head = ptr;
+    while(ptr->next != head){
+        printf("%d ", ptr->data);
+        ptr = ptr->next;
+    }
+    printf("%d ", ptr->data);
+    printf("\n");
+}
+
+struct Node * insertStart(struct Node *head, int val){
+struct Node *new = (struct Node *) malloc(sizeof(struct Node));
+struct Node *ptr = head;
+if (new == NULL)
+    {
+      printf ("Overflow!\n");
+    }
+else if (head->data == -1)
+    {
+      new = head;
+      new->data = val;
+      new->next = new;
+    }
+else
+    {
+      new->data = val;
+      new->next = head;
+      while(ptr->next != head){
+        ptr = ptr->next;
+    }
+    ptr->next = new;
+    }
+return new;
+}
+
+struct Node *insertEnd(struct Node *head, int val){
+struct Node *new = (struct Node *) malloc(sizeof(struct Node));
+struct Node *ptr = head;
+if (new == NULL)
+    {
+      printf ("Overflow!\n");
+    }
+else if (head->data == -1)
+    {
+      new = head;
+      new->data = val;
+      new->next = new;
+    }
+else{
+while(ptr->next != head){
+        ptr = ptr->next;
+    }
+ptr->next = new;
+new->data = val;
+new->next = head;
+}
+return head;
+}
+
+struct Node * insertAfter(struct Node *head, int prevData, int val){
+struct Node *new = (struct Node *) malloc(sizeof(struct Node));
+struct Node * ptr =head;
+if (new == NULL)
+    {
+      printf ("Overflow!\n");
+    }
+else if (head->data == -1)
+    {
+      new = head;
+      new->data = val;
+      new->next = new;
+    }
+else{
+while(ptr->data != prevData){
+        ptr = ptr->next;
+    }
+new->next = ptr->next;
+ptr->next = new;
+new->data = val;
+}
+return head;
+}
+
+struct Node * insertBefore(struct Node *head, int prevData, int val){
+struct Node *new = (struct Node *) malloc(sizeof(struct Node));
+struct Node * ptrBack = head;
+struct Node * ptrFront = head;
+if (new == NULL)
+    {
+      printf ("Overflow!\n");
+    }
+else if (head->data == -1)
+    {
+      new = head;
+      new->data = val;
+      new->next = new;
+    }
+else
+    {
+    while(ptrFront->data != prevData){
+        ptrBack = ptrFront;
+        ptrFront = ptrFront->next;
+    }
+new->next = ptrFront;
+ptrBack->next = new;
+new->data = val;
+}
+return head;
+}
+
+struct Node * insertAtIndex(struct Node *head, int index, int val){
+struct Node *new = (struct Node *) malloc(sizeof(struct Node));
+if (new == NULL)
+    {
+      printf ("Overflow!\n");
+    }
+else if (head->data == -1)
+    {
+      new = head;
+      new->data = val;
+      new->next = new;
+    }
+else{
+struct Node * ptr =head;
+for (int i = 0; i < index-1; i++)
+{
+   ptr = ptr->next;
+}
+new->next = ptr->next;
+ptr->next = new;
+new->data = val;
+}
+return head;
+}
+
+struct Node * deleteNode(struct Node *head, int prevData){
+if(head->data == -1){
+        printf("Underflow");
+    }
+else if(head->next == head){
+head->data = -1;
+}
+else{
+    struct Node * ptrBack =head;
+struct Node * ptrFront =head;
+while(ptrFront->data != prevData){
+        ptrBack = ptrFront;
+        ptrFront = ptrFront->next;
+    }
+ptrBack->next = ptrFront->next;
+free(ptrFront);
+}
+return head;
+}
+
+struct Node * deleteStart(struct Node *head){
+if(head->data == -1){
+        printf("Underflow");
+    }
+else if(head->next == head){
+head->data = -1;
+    }
+else{
+struct Node *ptr = head;
+while(ptr->next != head){
+    ptr = ptr->next;
+    }
+ptr->next = head->next;
+free(head);
+head = ptr->next;
+    }
+
+return head;
+}
+
+struct Node * deleteEnd(struct Node *head){
+if(head->data == -1){
+        printf("Underflow");
+    }
+else if(head->next == head){
+head->data = -1;
+}
+else{
+struct Node * ptrBack =head;
+struct Node * ptrFront =head;
+while(ptrFront->next != head){
+        ptrBack = ptrFront;
+        ptrFront = ptrFront->next;
+    }
+ptrBack->next = head;
+free(ptrFront);
+    }
+return head;
+}
+
+int main()
+{
+    struct Node *head = (struct Node *) malloc(sizeof(struct Node));
+    int option, item, element;
+    head->next = head;
+    head->data = -1;
+    
+
+    while (1)
+    {
+        printf("\n 1 -> Insert at Start\n 2-> Insert at End\n 3-> Insert After\n 4->Insert Before\n 5->Insert at Index\n 6->Delete by data\n 7->Delete Start\n 8->Delete End\n 9->Display\n");
+        printf("\nSelect an option :\n");
+        scanf("%d", &option);
+        switch (option)
+        {
+        case 1:
+            printf("\nEnter the Item to be inserted ");
+            scanf("%d", &item);
+            head = insertStart(head, item);
+            display(head);
+            break;
+        case 2:
+            printf("\nEnter the Item to be inserted ");
+            scanf("%d", &item);
+            head = insertEnd(head, item);
+            display(head);
+            break;
+        case 3:
+            printf("\nEnter the Item to be inserted ");
+            scanf("%d", &item);
+            printf("\nEnter the Item to be inserted after");
+            scanf("%d", &element);
+            head = insertAfter(head, element, item);
+            display(head);
+            break;
+        case 4:
+            printf("\nEnter the Item to be inserted ");
+            scanf("%d", &item);
+            printf("\nEnter the Item to be inserted before ");
+            scanf("%d", &element);
+            head = insertBefore(head, element, item);
+            display(head);
+            break;
+        case 5:
+            printf("\nEnter the Item to be inserted ");
+            scanf("%d", &item);
+            printf("\nEnter the index to be inserted at ");
+            scanf("%d", &element);
+            head = insertAtIndex(head, element, item);
+            display(head);
+            break;
+        case 6:
+            printf("\nEnter the Item to be Deleted ");
+            scanf("%d", &item);
+            head = deleteNode(head, item);
+            display(head);
+            break;
+        case 7:
+            head = deleteStart(head);
+            display(head);
+            break;
+        case 8:
+            head = deleteEnd(head);
+            display(head);
+            break;
+        case 9:
+            display(head);
+            break;
+        default:
+            printf("Invalid Input");
+            break;
+        }
+    }
+    printf("Exiting Program");
+
+    return 0;
+}
