@@ -1,0 +1,19 @@
+#include <stdio.h>
+int main()
+{   int a, b, c;
+
+    printf("Enter the value of Number1, Number2, Number1 :\t");
+    scanf("%d,%d,%d",&a,&b,&c);
+    
+    if((a>b)&(a>c)){
+        printf("Number1 is the greatest");
+    }
+    else if(b>c){
+        printf("Number2 is the greatest");
+    }
+    else{
+        printf("Number3 is the greatest");
+    }
+    
+    return 0;
+}
