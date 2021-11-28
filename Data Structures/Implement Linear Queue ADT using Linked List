@@ -1,0 +1,149 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct queue
+{
+    struct Node *front;
+    struct Node *rear;
+};
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int isEmpty(struct queue *Q)
+{
+    if (Q->front == NULL)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+int isFull(struct queue *Q)
+{   
+    struct Node *new = (struct Node *) malloc(sizeof(struct Node));
+    if (new == NULL)
+    {
+        return 1;
+    }
+    else
+    {   free(new);
+        return 0;
+    }
+}
+
+struct queue* add(struct queue *Q, int val)
+{
+    if(isFull(Q))
+    {
+        printf("Stack OverFlow");
+    }
+    else if(Q->front->data == NULL)
+    {
+        Q->front->data = val;
+    }
+    else
+    {
+        struct Node *new = (struct Node *) malloc(sizeof(struct Node));
+        struct Node *ptr = Q->front;
+        new->next = NULL;
+        while(ptr->next != NULL){
+        ptr = ptr->next;
+        }
+        ptr->next = new;
+        new->data = val;
+        printf("Item added %d", (new->data));
+        Q->rear = new;
+    }
+    return Q;
+}
+
+struct queue* delete(struct queue *Q)
+{   if(isEmpty(Q))
+    {
+        printf("Stack UnderFlow");
+    }
+    else
+    {
+        struct Node *old = (struct Node *) malloc(sizeof(struct Node));
+        old = Q->front;
+        Q->front = Q->front->next;
+        printf("Item delete %d", (old->data));
+        free(old);
+    }
+    return Q;
+}
+
+void display(struct queue * Q){
+    struct Node *ptr = (struct Node *) malloc(sizeof(struct Node));
+    ptr = Q->front;
+    while(ptr != NULL){
+        printf("%d ", ptr->data);
+        ptr = ptr->next;
+    }
+    printf("\n");
+}
+
+int main()
+{
+    struct queue * Q = (struct queue *) malloc(sizeof(struct queue));
+    Q->front = Q->rear = (struct Node *)malloc(sizeof(struct Node));
+    Q->front->data = NULL;
+    Q->front->next = NULL;
+    Q->rear->data = NULL;
+    Q->rear->next = NULL;
+    int option, item;
+
+    while (1)
+    {
+        printf("\n1 -> Add\n 2-> Delete\n 3-> Front\n 4->Is Empty\n 5->Is Full\n 6->Display\n 7-> rear\n");
+        printf("\nSelect an option :\n");
+        scanf("%d", &option);
+        switch (option)
+        {
+        case 1:
+            printf("\nEnter the Item to be added ");
+            scanf("%d", &item);
+            Q = add(Q,item);
+            break;
+        case 2:
+            Q = delete(Q);
+            break;
+        case 3:
+            printf("\nThe Item at front is %d\n", Q->front->data);
+            break;
+        case 4:
+            if (isEmpty(Q))
+            {
+                printf("\nThe Queue is empty\n");
+            }
+            else{
+                printf("\nThe Queue is not empty\n");
+            }
+            break;
+        case 5:
+            if (isFull(Q))
+            {
+                printf("\nThe queue is full\n");
+            }
+            else{
+                printf("\nThe queue is not full\n");
+            }
+            break;
+        case 6:
+            display(Q);
+            break;
+        case 7:
+            printf("\nThe Item at rear is %d\n", Q->rear->data);
+            break;
+        default:
+            break;
+        }
+    }
+    printf("Exiting Program");
+
+    return 0;
+}
