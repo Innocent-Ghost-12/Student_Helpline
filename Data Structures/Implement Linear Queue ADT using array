@@ -1,0 +1,143 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct queue
+{
+    int size;
+    int front;
+    int rear;
+    int *arr; // int arr[50];
+};
+
+int isEmpty(struct queue *Q)
+{
+    if (Q->front == -1 || Q->front > Q->rear)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int isFull(struct queue *Q)
+{
+    if (Q->rear == Q->size - 1)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+void insert(struct queue *Q, int val)
+{
+    if(isFull(Q))
+    {
+        printf("Queue OverFlow");
+    }
+    else if (isEmpty(Q))
+    {
+        Q->rear = Q->front = 0;
+        Q->arr[Q->rear] = val;
+        printf("Item Inserted %d", Q->arr[Q->rear]);
+    }
+    else
+    {
+        Q->rear++;
+        Q->arr[Q->rear] = val;
+        printf("Item Inserted %d", Q->arr[Q->rear]);
+    }
+}
+
+int delete(struct queue *Q){
+    int val = -1;
+    if(isEmpty(Q))
+    {
+        printf("Queue Underflow");
+    }
+    else
+    {
+        val = Q->arr[Q->front];
+        Q->front++;
+        printf("Item Deleted %d", val);
+    }
+    return val;
+}
+
+void display(struct queue *Q)
+{   if (isEmpty(Q))
+    {
+        printf("Queue is Empty");
+        return;
+    }
+    int j = 1;
+    for (int i = Q->front; i <= Q->rear; i++)
+    {
+        printf(" %d -> %d\n",j,Q->arr[i]);
+        j++;
+    }
+    
+}
+
+int main()
+{
+    struct queue * Q = (struct queue *) malloc(sizeof(struct queue));
+    Q->size = 100;
+    Q->front = Q->rear = -1;
+    Q->arr = (int *)malloc((Q->size) * sizeof(int));
+    int option, item;
+
+    while (1)
+    {
+        printf("\n 1 -> insert\n 2-> delete\n 3-> Front\n 4->Is Empty\n 5->Is Full\n 6->Display\n 7-> Rear\n");
+        printf("\nSelect an option :\n");
+        scanf("%d", &option);
+        switch (option)
+        {
+        case 1:
+            printf("\nEnter the Item to be Inserted ");
+            scanf("%d", &item);
+            insert(Q, item);
+            break;
+        case 2:
+            delete(Q);
+            break;
+        case 3:
+            printf("\nThe Item at front is %d\n", Q->arr[Q->front]);
+            break;
+        case 4:
+            if (isEmpty(Q))
+            {
+                printf("\nThe queue is empty\n");
+            }
+            else{
+                printf("\nThe queue is not empty\n");
+            }
+            break;
+        case 5:
+            if (isFull(Q))
+            {
+                printf("\nThe queue is full\n");
+            }
+            else{
+                printf("\nThe queue is not full\n");
+            }
+            break;
+        case 6:
+            display(Q);
+            break;
+        case 7:
+            printf("\nThe Item at front is %d\n", Q->arr[Q->rear]);
+            break;
+        default:
+            break;
+        }
+    }
+    printf("Exiting Program");
+
+    return 0;
+}
