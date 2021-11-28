@@ -1,0 +1,125 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct stack
+{
+    int size;
+    int top;
+    int *arr;
+};
+
+int isEmpty(struct stack *S)
+{
+    if (S->top == -1)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+int isFull(struct stack *S)
+{
+    if (S->top == S->size - 1)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+void push(struct stack *S, int val)
+{
+    if(isFull(S))
+    {
+        printf("Stack OverFlow");
+    }
+    else
+    {
+        (S->top)++;
+        S->arr[S->top] = val;
+        printf("Item pushed %d", S->arr[S->top]);
+    }
+}
+
+int pop(struct stack *S)
+{
+    int val = -1;
+    if(isEmpty(S))
+    {
+        printf("Stack OverFlow");
+    }
+    else
+    {
+        val = S->arr[S->top];
+        S->top--;
+        printf("Item pop %d", val);
+    }
+    return val;
+}
+
+void display(struct stack *S)
+{
+    for (int i = 0; i <= S->top; i++)
+    {
+        printf("%d -> %d",i,S->arr[i]);
+    }
+    
+}
+
+int main()
+{
+    struct stack * S = (struct stack *) malloc(sizeof(struct stack));
+    S->size = 100;
+    S->top = -1;
+    S->arr = (int *)malloc((S->size) * sizeof(int));
+    int option, item;
+
+    while (1)
+    {
+        printf("\n1 -> Push\n 2-> Pop\n 3-> Top\n 4->Is Empty\n 5->Is Full\n 6->Display\n");
+        printf("\nSelect an option :\n");
+        scanf("%d", &option);
+        switch (option)
+        {
+        case 1:
+            printf("\nEnter the Item to be pushed ");
+            scanf("%d", &item);
+            push(S, item);
+            break;
+        case 2:
+            pop(S);
+            break;
+        case 3:
+            printf("\nThe Item at top is %d\n", S->arr[S->top]);
+            break;
+        case 4:
+            if (isEmpty(S))
+            {
+                printf("\nThe Stack is empty\n");
+            }
+            else{
+                printf("\nThe Stack is not empty\n");
+            }
+            break;
+        case 5:
+            if (isFull(S))
+            {
+                printf("\nThe Stack is full\n");
+            }
+            else{
+                printf("\nThe Stack is not full\n");
+            }
+            break;
+        case 6:
+            display(S);
+            break;
+        default:
+            break;
+        }
+    }
+    printf("Exiting Program");
+
+    return 0;
+}
