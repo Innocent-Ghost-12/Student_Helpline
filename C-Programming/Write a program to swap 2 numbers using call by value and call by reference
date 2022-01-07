@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <math.h>
+
+int a,b,temp;
+
+// Swap by call by value function
+void swap(int a , int b){
+    temp = a;
+    a = b;
+    b= temp;
+    printf("The value of a is %d and the value of b is %d \n",a,b);
+}
+
+// Swap by call by referance function
+void swapref(int *a , int *b){
+    temp = *a;
+    *a = *b;
+    *b= temp;
+    printf("The value of a is %d and the value of b is %d \n",*a,*b);
+}
+
+int main(){
+    
+    printf("Enter the a : ");
+    scanf("%d", &a);
+    
+    printf("Enter the b : ");
+    scanf("%d", &b);
+    // Swap by call by value
+    swap(a,b);
+    
+    printf("Unchanged values in main function after call by value\n");
+    printf("In main function the value of a is %d and the value of b is %d \n",a,b);
+    
+    // Swap by call by value
+    swapref(&a,&b);
+    
+    printf("Changed values in main function after call by value\n");
+    printf("In main function the value of a is %d and the value of b is %d \n",a,b);
+    
+    return 0;
+}
