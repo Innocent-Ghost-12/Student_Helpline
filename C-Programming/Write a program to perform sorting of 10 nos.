@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+int tr[10],temp;
+
+int main(){
+
+    printf("Enter the numbers of sorting : ");
+    for (int i = 0; i < 10; i++) {
+        scanf("%d",&tr[i]);
+    }
+    
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10 - i; j++) {
+            if(tr[i]>tr[i+j]){
+                temp = tr[i];
+                tr[i] = tr[i+j];
+                tr[i+j] = temp;
+            }
+        }
+    }
+    printf("The numbers in sorted order are : ");
+    for (int i = 0; i < 10; i++) {
+        printf("%d ",tr[i]);
+    }
+    
+    return 0;
+}
