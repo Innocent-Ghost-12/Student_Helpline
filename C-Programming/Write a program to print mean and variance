@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <math.h>
+
+int arr[5],sum;
+float avg,vari[5],varsum,stddev;
+
+int main(){
+
+    printf("Enter the 5 numbers : ");
+    for (int i = 0; i < 5; i++) {
+        scanf("%d",&arr[i]);
+    }
+    
+    for (int i = 0; i < 5; i++) {
+        sum = sum + arr[i];
+    }
+    
+    avg = sum / 5;
+    
+    printf("The mena of the given numbers is %f\n",avg);
+    
+    for (int i = 0; i < 5; i++) {
+        vari[i] = avg - arr[i];
+        vari[i] *= vari[i];
+    }
+    
+    for (int i = 0; i < 5; i++) {
+        varsum += vari[i];
+    }
+    
+    varsum /= 4;
+    printf("Variance of the given numbers : %f",varsum);
+    
+    return 0;
+}
