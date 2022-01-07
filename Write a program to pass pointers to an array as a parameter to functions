@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+int main()
+{
+    int arr[10],sum=0;
+    int *ptr;
+    int sumof(int *ptr){
+        for (int i = 0; i < 10; i++) {
+            sum += *ptr;
+            ptr++;
+        }
+        
+    printf("\nThe sum is : %d",sum);
+    };
+    printf("\nEnter array elements\n");
+    
+    for (int i = 0; i < 10; i++) {
+        printf("Enter the %d array elements:\t",i+1);
+        scanf("%d",&arr[i]);
+    }
+
+    ptr = arr;
+    sumof(ptr);
+    
+    return 0;
+}
